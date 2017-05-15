@@ -1,0 +1,54 @@
+        System.out.println("Remove range 20 50");
+
+        table.removeRange(20, 50);
+
+        System.out.println(table.toString());
+
+        System.out.println("Get by key " + trapezoidToGet.getPerimeter());
+        System.out.println(table.get(trapezoidToGet.getPerimeter()));
+        System.out.println();
+
+        System.out.println("Remove by key " + trapezoidToGet.getPerimeter());
+        System.out.println(table.remove(trapezoidToGet.getPerimeter()));
+        System.out.println(table.toString());
+
+
+
+          public boolean removeRange(double lowestKey, double highestKey) {
+
+               boolean removed = false;
+
+               for (int i = 0; i < table.length; i++) {
+
+                   if (table[i] == null) {
+                       continue;
+                   }
+
+                   boolean isInRange = table[i].getKey() >= lowestKey && table[i].getKey() <= highestKey;
+
+                   if (isInRange) {
+                       table[i] = null;
+                       removed = true;
+                   }
+               }
+
+               return removed;
+           }
+
+               public Trapezoid remove(double key) {
+                   int hash = hash(key);
+                   int i = 0;
+
+                   while (i < table.length) {
+                       hash = (hash + 1) % table.length;
+                       i++;
+
+                       if (table[hash] != null && table[hash].getKey() == key) {
+                           Trapezoid trapezoid = table[hash].getValue();
+                           table[hash] = null;
+                           return trapezoid;
+                       }
+                   }
+
+                   return null;
+               }
